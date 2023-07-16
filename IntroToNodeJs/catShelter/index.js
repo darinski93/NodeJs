@@ -5,8 +5,6 @@ const siteCss = require('./css/site.css')
 
 
 const server = http.createServer((req, res) => {
-
-
     res.writeHead(200, {
         'content-type': 'text/html',
     })
@@ -16,14 +14,13 @@ const server = http.createServer((req, res) => {
             res.write(homePage)
             break;
 
-        case './css/site.css':
-
+        case '/css/site.css':
+         
             res.writeHead(200, {
                 'content-type': 'text/css',
             })
             res.write(siteCss)
 
-          
 
         default:
             `<h1>404<h1>`
