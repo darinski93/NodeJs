@@ -19,6 +19,16 @@ app.get('/cats', (req, res) => {
     `)
 })
 
+app.get('/cats/1', (req, res)=>{
+    res.download()
+})
+
+app.get('/cats/:catId', (req, res) =>{
+
+    console.log(req.params);
+    res.send(`<h1>Individual Cat Page catId= ${req.params.catId}</h1>`)
+})
+
 app.get('/dogs', (req, res) => {
     res.send(`<h1>Dogs Page </h1>
     <a href="/">Home</a>
@@ -37,6 +47,10 @@ app.put('/cats', (req,res) =>{
 
 app.delete('/cats', (req, res) =>{
     res.send('cat is deleted')
+})
+
+app.get('*', (req, res) =>{
+    res.send('404')
 })
 
 app.listen(5000, () => console.log('Server is running on port 5000...'));
