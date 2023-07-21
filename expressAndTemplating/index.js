@@ -19,11 +19,23 @@ app.get('/cats', (req, res) => {
     `)
 })
 
-app.get('/cats/1', (req, res)=>{
+app.get('/cats/1', (req, res) => {
     res.download()
 })
 
-app.get('/cats/:catId', (req, res) =>{
+app.get('/json', (req, res) => {
+    res.json({ ok: true, text: 'Hello from Json' })
+})
+
+app.get('/redirect', (req, res) => {
+    res.redirect('/redirected')
+})
+
+app.get('/redirected', (req, res) => {
+    res.send('This is redirected page')
+})
+
+app.get('/cats/:catId', (req, res) => {
 
     console.log(req.params);
     res.send(`<h1>Individual Cat Page catId= ${req.params.catId}</h1>`)
@@ -37,19 +49,19 @@ app.get('/dogs', (req, res) => {
     `)
 })
 
-app.post('/cats', (req,res) =>{
+app.post('/cats', (req, res) => {
     res.send('cat received')
 })
 
-app.put('/cats', (req,res) =>{
+app.put('/cats', (req, res) => {
     res.send('cat is updated')
 })
 
-app.delete('/cats', (req, res) =>{
+app.delete('/cats', (req, res) => {
     res.send('cat is deleted')
 })
 
-app.get('*', (req, res) =>{
+app.get('*', (req, res) => {
     res.send('404')
 })
 
