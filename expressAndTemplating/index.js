@@ -6,13 +6,26 @@ const loggerMiddleware = require('./loggerMiddleware')
 
 const app = express()
 
+app.use(express.static('public'))
+
 app.use(loggerMiddleware)
 
 app.get('/', (req, res) => {
-    res.send(`<h1>Hello from Express!</h1>
+    res.send(`
+    <html>
+    <head>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+    
+    </body>
+    <h1>Hello from Express!</h1>
     <a href="/cats">Cats</a>
     <a href="/dogs">Dogs</a>
 
+    
+    </html>
+   
     
     `)
 })
