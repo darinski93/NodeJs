@@ -38,7 +38,15 @@ app.get('/old', (req, res) => {
 })
 
 app.get('/cats', (req, res) => {
-    res.render('cats')
+
+    const cats = [
+        { name: 'Nikolaycho', breed: 'Ulichna', age: 10 },
+        { name: 'Billy', breed: 'Persian', age: 6 },
+        { name: 'Marijka', breed: 'Angora', age: 7 }
+
+    ]
+
+    res.render('cats', { cats })
 })
 
 
@@ -61,15 +69,19 @@ let validateCatId = (req, res, next) => {
     let catId = Number(req.params.catId)
 
     if (!catId) {
-        res.send('Invalid CatId!!')
-    } else {
-        next()
+       return  res.send('Invalid CatId!!')
     }
+
+    req.catId = catId
+
+    next()
+
 }
 
 app.get('/cats/:catId', validateCatId, (req, res) => {
 
-    res.send(`<h1>Individual Cat Page catId= ${req.params.catId}</h1>`)
+    // res.send(`<h1>Individual Cat Page catId= ${req.params.catId}</h1>`)
+    res.render('cat', { id: req.params.catId, isOdd : req.catId % 2 !== 0 })
 })
 
 app.get('/dogs', (req, res) => {
