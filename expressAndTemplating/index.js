@@ -1,6 +1,12 @@
 const express = require('express')
 
+
+const loggerMiddleware = require('./loggerMiddleware')
+
+
 const app = express()
+
+app.use(loggerMiddleware)
 
 app.get('/', (req, res) => {
     res.send(`<h1>Hello from Express!</h1>
@@ -19,9 +25,7 @@ app.get('/cats', (req, res) => {
     `)
 })
 
-app.get('/cats/1', (req, res) => {
-    res.download()
-})
+
 
 app.get('/json', (req, res) => {
     res.json({ ok: true, text: 'Hello from Json' })
@@ -35,9 +39,20 @@ app.get('/redirected', (req, res) => {
     res.send('This is redirected page')
 })
 
-app.get('/cats/:catId', (req, res) => {
 
-    console.log(req.params);
+let validateCatId = (req, res, next) => {
+
+    let catId = Number(req.params.catId)
+
+    if (!catId) {
+        res.send('Invalid CatId!!')
+    } else {
+        next()
+    }
+}
+
+app.get('/cats/:catId', validateCatId, (req, res) => {
+
     res.send(`<h1>Individual Cat Page catId= ${req.params.catId}</h1>`)
 })
 
