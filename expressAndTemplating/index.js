@@ -1,16 +1,23 @@
 const express = require('express')
+const { engine } = require('express-handlebars')
 
 
 const loggerMiddleware = require('./loggerMiddleware')
 
 
 const app = express()
+app.engine('handlebars', engine())
+app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 
 app.use(loggerMiddleware)
 
 app.get('/', (req, res) => {
+    res.render('home')
+})
+
+app.get('/old', (req, res) => {
     res.send(`
     <html>
     <head>
@@ -31,11 +38,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/cats', (req, res) => {
-    res.send(`<h1>Cats Page</h1>
-    <a href="/">Home</a>
-    <a href="/dogs">Dogs</a>
-
-    `)
+    res.render('cats')
 })
 
 
